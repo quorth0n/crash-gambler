@@ -9,7 +9,6 @@ var compression = require("compression");
 var path = require("path");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
-var socketIO = require("socket.io");
 var ioCookieParser = require("socket.io-cookie");
 var _ = require("lodash");
 var debug = require("debug")("app:index");
@@ -189,7 +188,7 @@ app.use(errorHandler);
 
 /**  Server **/
 var server = http.createServer(app);
-var io = socketIO(server); //Socket io must be after the lat app.use
+var io = require("socket.io").listen(server);
 io.use(ioCookieParser);
 
 /** Socket io login middleware **/

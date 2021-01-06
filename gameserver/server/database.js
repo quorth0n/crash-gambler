@@ -10,7 +10,7 @@ if (!config.DATABASE_URL)
 
 console.log("DATABASE_URL: ", config.DATABASE_URL);
 
-const { Pool, Client } = require("pg");
+const { Pool, types } = require("pg");
 
 const pool = new Pool({
   connectionString: config.DATABASE_URL,
@@ -34,15 +34,15 @@ const pool = new Pool({
 // this out.
 // pg.defaults.poolIdleTimeout = 120000;
 
-/* pg.types.setTypeParser(20, function (val) {
+types.setTypeParser(20, function (val) {
   // parse int8 as an integer
   return val === null ? null : parseInt(val);
 });
 
-pg.types.setTypeParser(1700, function (val) {
+types.setTypeParser(1700, function (val) {
   // parse numeric as a float
   return val === null ? null : parseFloat(val);
-}); */
+});
 
 // callback is called with (err, client, done)
 function connect(callback) {
