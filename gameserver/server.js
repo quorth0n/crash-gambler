@@ -13,7 +13,7 @@ var GameHistory = require("./server/game_history");
 
 var _ = require("lodash");
 
-require('dotenv').config();
+require("dotenv").config();
 
 var server;
 
@@ -56,7 +56,7 @@ async.parallel(
 
     var gameHistory = new GameHistory(results[0]);
     var info = results[1];
-    var bankroll = 1000*1e8;// results[2];
+    var bankroll = 10 * 1e8; // results[2];
 
     console.log("Have a bankroll of: ", bankroll / 1e8, " btc");
 
