@@ -1,5 +1,5 @@
-define(function(){
-    return "// This strategy editor is in BETA mode, please\n\
+define(function () {
+  return "// This strategy editor is in BETA mode, please\n\
 // exercise extreme caution and use exclusively at\n\
 // your own risk. No bets can or will be refunded in\n\
 // case of errors.\n\
@@ -55,8 +55,8 @@ engine.on('disconnect', function() {\n\
 console.log('Balance: ' + engine.getBalance());\n\
 console.log('The current payout is: ' + engine.getCurrentPayout());\n\
 console.log('My username is: ', engine.getUsername());\n\
-console.log('The max current bet is: ', engine.getMaxBet()/100, ' Bits');\n\
-console.log('The current maxWin is: ', engine.getMaxWin()/100, ' Bits');\n\
+console.log('The max current bet is: ', engine.getMaxBet()/100, ' satoshis');\n\
+console.log('The current maxWin is: ', engine.getMaxWin()/100, ' satoshis');\n\
 // engine.getEngine() for raw engine \n\
 \n\
 \n\

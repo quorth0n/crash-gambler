@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var async = require("async");
 var assert = require("assert");
 var constants = require("constants");
@@ -12,8 +14,6 @@ var Chat = require("./server/chat");
 var GameHistory = require("./server/game_history");
 
 var _ = require("lodash");
-
-require("dotenv").config();
 
 var server;
 
