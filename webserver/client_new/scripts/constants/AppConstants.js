@@ -68,6 +68,7 @@ define(["lib/key-mirror"], function (KeyMirror) {
       MAX_BET:
         100000000 *
         100 *
+        100 *
         100 /** Max bet per game 1,000,000 Bits, this will be calculated dynamically in the future, based on the invested amount in the casino **/,
     },
 

@@ -7,6 +7,6 @@ define(function () {
     onWinSelectedOpt: "return_to_base", //Options: return_to_base, increase_bet_by
     onWinIncreaseQty: 2,
     invalidData: false,
-    maxBetStop: 1000000 * 100 * 100, // TODO: figure out what this does
+    maxBetStop: 1000000 * 100 * 100 * 100, // TODO: figure out what this does
   };
 });

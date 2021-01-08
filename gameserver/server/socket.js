@@ -125,7 +125,8 @@ module.exports = function (server, game, chat) {
           );
         }
 
-        if (amount > 1e8 * 100 * 100)
+        if (amount > 1e8 * 100 * 100 * 100)
+          // TODO: change max bet
           // 1 BTC limit
           return sendError(
             socket,
