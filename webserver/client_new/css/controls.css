@@ -124,6 +124,7 @@
 
 #controls-inner-container .bet-button-container {
   height: 100%;
+  max-height: 100px;
   box-sizing: content-box;
 }
 
