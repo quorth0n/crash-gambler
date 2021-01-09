@@ -4,12 +4,13 @@ var config = require("../config/config");
 
 var async = require("async");
 var lib = require("./lib");
-var passwordHash = require("password-hash");
+var passwordHash = require("bcrypt");
 var speakeasy = require("speakeasy");
 var m = require("multiline");
 const { Pool, types } = require("pg");
 
 var databaseUrl = config.DATABASE_URL;
+const SALT_ROUNDS = 10;
 
 if (!databaseUrl) throw new Error("must set DATABASE_URL environment var");
 
@@ -120,8 +121,8 @@ exports.createUser = function (
 ) {
   assert(username && password);
 
-  getClient(function (client, callback) {
-    var hashedPassword = passwordHash.generate(password);
+  getClient(async (client, callback) => {
+    var hashedPassword = await passwordHash.hash(password, SALT_ROUNDS);
 
     client.query(
       "SELECT COUNT(*) count FROM users WHERE lower(username) = lower($1)",
@@ -173,9 +174,9 @@ exports.updateEmail = function (userId, email, callback) {
   );
 };
 
-exports.changeUserPassword = function (userId, password, callback) {
+exports.changeUserPassword = async (userId, password, callback) => {
   assert(userId && password && callback);
-  var hashedPassword = passwordHash.generate(password);
+  var hashedPassword = await passwordHash.hash(password, SALT_ROUNDS);
   query(
     "UPDATE users SET password = $1 WHERE id = $2",
     [hashedPassword, userId],
@@ -204,14 +205,14 @@ exports.validateUser = function (username, password, otp, callback) {
   query(
     "SELECT id, password, mfa_secret FROM users WHERE lower(username) = lower($1)",
     [username],
-    function (err, data) {
+    async (err, data) => {
       if (err) return callback(err);
 
       if (data.rows.length === 0) return callback("NO_USER");
 
       var user = data.rows[0];
 
-      var verified = passwordHash.verify(password, user.password);
+      var verified = await passwordHash.compare(password, user.password);
       if (!verified) return callback("WRONG_PASSWORD");
 
       if (user.mfa_secret) {
@@ -407,9 +408,9 @@ exports.getUserByName = function (username, callback) {
 };
 
 /* Sets the recovery record to userd and update password */
-exports.changePasswordFromRecoverId = function (recoverId, password, callback) {
+exports.changePasswordFromRecoverId = async (recoverId, password, callback) => {
   assert(recoverId && password && callback);
-  var hashedPassword = passwordHash.generate(password);
+  var hashedPassword = await passwordHash.generate(password);
 
   var sql = m(function () {
     /*
