@@ -51,7 +51,7 @@ define(["seedrandom", "lodash", "constants/AppConstants"], function (
         return new Error(
           "The bet must be less no more than " +
             formatSatoshis(AppConstants.Engine.MAX_BET) +
-            " bits"
+            " satoshis"
         );
 
       if (_.isNaN(bet) || Math.floor(bet) !== bet)
