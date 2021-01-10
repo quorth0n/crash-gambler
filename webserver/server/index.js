@@ -123,7 +123,7 @@ app.use(function (req, res, next) {
   }
 
   res.header("Cache-Control", "no-cache");
-  res.header("Content-Security-Policy", "frame-ancestors 'none'");
+  res.header("Content-Security-Policy", "frame-ancestors 'self'");
 
   if (!lib.isUUIDv4(sessionId)) {
     res.clearCookie("id");

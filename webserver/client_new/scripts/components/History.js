@@ -51,7 +51,7 @@ define(["react", "game-logic/clib", "game-logic/engine"], function (
           else className = "";
 
           return D.td(
-            null,
+            { key: game.game_id },
             D.a(
               {
                 href: "/game/" + game.game_id,

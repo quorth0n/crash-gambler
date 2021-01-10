@@ -4,16 +4,17 @@ define([
   "stores/GameSettingsStore",
   "actions/GameSettingsActions",
   "game-logic/clib",
-  "screenfull",
+  "components/Menu",
 ], function (
   React,
   Engine,
   GameSettingsStore,
   GameSettingsActions,
   Clib,
-  Screenfull //Attached to window.screenfull
+  MenuClass
 ) {
   var D = React.DOM;
+  const Menu = React.createFactory(MenuClass);
 
   function getState() {
     return {
@@ -95,6 +96,7 @@ define([
 
       return D.div(
         { id: "top-bar" },
+        Menu(),
         D.div(
           { className: "title" },
           D.a(

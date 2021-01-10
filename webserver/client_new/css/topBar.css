@@ -8,6 +8,12 @@
   border-bottom: 1px solid #ddd;
   font-family: "Verlag A", "Verlag B", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  user-select: none;
 }
 
 #top-bar .title {
@@ -19,7 +25,6 @@
   line-height: 2rem;
   font-size: 1.5rem;
   font-weight: bold;
-  padding-left: 1rem;
   font-family: "Courier New";
 }
 
@@ -37,7 +42,6 @@
 
 #top-bar .user-login .balance-bits {
   display: inline-block;
-  padding-right: 0.5rem;
 }
 
 #top-bar .user-login .balance-bits span {
@@ -51,7 +55,7 @@
 }
 @media handheld, only screen and (max-width: 767px) {
   #top-bar .user-login .username {
-    padding-right: 0.5rem;
+    /* TODO: figure out padding for mobile devices */
   }
 }
 
@@ -64,17 +68,10 @@
 
 #top-bar .user-login .register {
   display: inline-block;
-
-  padding-right: 1rem;
-}
-
-#top-bar .user-login .register a {
 }
 
 #top-bar .user-login .login {
   display: inline-block;
-
-  padding-right: 2rem;
 }
 
 #top-bar .user-login .login a {
