@@ -8,12 +8,31 @@
   border-bottom: 1px solid #ddd;
   font-family: "Verlag A", "Verlag B", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
-  display: flex;
-  justify-content: space-between;
   align-content: center;
   padding-left: 1rem;
   padding-right: 1rem;
   user-select: none;
+}
+
+#top-bar .tabs {
+  padding-left: 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.tabs a {
+  opacity: 50%;
+  margin-right: 20px;
+  color: white;
+}
+
+.tabs a:hover {
+  opacity: 25%;
+}
+
+.tabs i {
+  margin-right: 5px;
 }
 
 #top-bar .title {
@@ -51,7 +70,6 @@
 
 #top-bar .user-login .username {
   display: inline-block;
-  padding-right: 2rem;
 }
 @media handheld, only screen and (max-width: 767px) {
   #top-bar .user-login .username {

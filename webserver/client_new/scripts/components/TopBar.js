@@ -5,16 +5,19 @@ define([
   "actions/GameSettingsActions",
   "game-logic/clib",
   "components/Menu",
+  "components/PopupFrame",
 ], function (
   React,
   Engine,
   GameSettingsStore,
   GameSettingsActions,
   Clib,
-  MenuClass
+  MenuClass,
+  PopupFrameClass
 ) {
   var D = React.DOM;
   const Menu = React.createFactory(MenuClass);
+  const PopupFrame = React.createFactory(PopupFrameClass);
 
   function getState() {
     return {
@@ -96,7 +99,7 @@ define([
 
       return D.div(
         { id: "top-bar" },
-        Menu(),
+        this.props.isMobileOrSmall && Menu(),
         D.div(
           { className: "title" },
           D.a(
@@ -104,6 +107,58 @@ define([
             D.h1(null, this.props.isMobileOrSmall ? "BaB" : "bustabit")
           )
         ),
+        !this.props.isMobileOrSmall &&
+          D.div(
+            { className: "tabs" },
+            PopupFrame({
+              render: (open) =>
+                React.createElement(
+                  "a",
+                  {
+                    onClick: open,
+                  },
+                  D.i({ className: "fa fa-bank" }),
+                  "House"
+                ),
+              src: "/bankroll",
+            }),
+            PopupFrame({
+              render: (open) =>
+                React.createElement(
+                  "a",
+                  {
+                    onClick: open,
+                  },
+                  D.i({ className: "fa fa-bar-chart" }),
+                  "Statistics"
+                ),
+              src: "/stats",
+            }),
+            PopupFrame({
+              render: (open) =>
+                React.createElement(
+                  "a",
+                  {
+                    onClick: open,
+                  },
+                  D.i({ className: "fa fa-trophy" }),
+                  "Leaderboard"
+                ),
+              src: "/leaderboard",
+            }),
+            PopupFrame({
+              render: (open) =>
+                React.createElement(
+                  "a",
+                  {
+                    onClick: open,
+                  },
+                  D.i({ className: "fa fa-question-circle" }),
+                  "Help"
+                ),
+              src: "/faq",
+            })
+          ),
         userLogin
       );
     },
