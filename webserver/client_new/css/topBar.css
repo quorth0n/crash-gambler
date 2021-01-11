@@ -12,6 +12,7 @@
   padding-left: 1rem;
   padding-right: 1rem;
   user-select: none;
+  display: flex;
 }
 
 #top-bar .tabs {
@@ -36,10 +37,6 @@
   margin-right: 5px;
 }
 
-#top-bar .title {
-  float: left;
-}
-
 #top-bar .title h1 {
   color: #e58929;
   line-height: 2rem;
@@ -49,7 +46,7 @@
 }
 
 #top-bar .user-login {
-  float: right;
+  margin-left: auto;
   line-height: 40px;
 }
 

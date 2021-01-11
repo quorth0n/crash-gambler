@@ -314,4 +314,5 @@ body {
   padding: 5px 10px;
   font-size: 1.3rem;
   background: transparent;
+  cursor: pointer;
 }
