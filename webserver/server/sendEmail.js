@@ -54,7 +54,7 @@ exports.passwordReset = function(to, recoveryList, callback) {
         '<title>MoneyPot</title>' +
         '</head>' +
         '<body>'+
-        '<h2>Bustabit Password recovery</h2>' +
+        '<h2>Retrocrash Password recovery</h2>' +
         '<br>' +
          htmlRecoveryLinks +
         '<br>' +
@@ -65,7 +65,7 @@ exports.passwordReset = function(to, recoveryList, callback) {
     var details =  {
         to: to,
         from: 'noreply@moneypot.com',
-        subject: 'Bustabit.com - Reset Password Request',
+        subject: 'retrocrash.com - Reset Password Request',
         html: html
 
     };

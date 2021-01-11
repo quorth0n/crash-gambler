@@ -61,7 +61,7 @@ define(["lib/key-mirror"], function (KeyMirror) {
     Engine: {
       STOP_PREDICTING_LAPSE: 300,
       HOST:
-        window.document.location.host === "www.bustabit.com" || window.DEV_OTT
+        window.document.location.host === "www.retrocrash.com" || window.DEV_OTT
           ? "https://g2.moneypot.com:443"
           : window.document.location.host.replace(/:3841$/, ":3842"),
       CHAT_HOST: window.document.location.host,

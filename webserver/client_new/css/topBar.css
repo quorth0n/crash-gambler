@@ -15,7 +15,7 @@
 }
 
 #top-bar .tabs {
-  padding-left: 1.5rem;
+  padding-left: 2rem;
   height: 100%;
   display: flex;
   align-items: center;
@@ -23,8 +23,9 @@
 
 .tabs a {
   opacity: 50%;
-  margin-right: 20px;
+  margin-right: 1rem;
   color: white;
+  font-size: 85%;
 }
 
 .tabs a:hover {

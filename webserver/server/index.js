@@ -20,7 +20,7 @@ var database = require("./database");
 var Chat = require("./chat");
 var lib = require("./lib");
 
-debug("booting bustabit webserver");
+debug("booting retrocrash webserver");
 
 /** TimeAgo Settings:
  * Simplify and de-verbosify timeago output.

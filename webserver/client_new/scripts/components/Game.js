@@ -116,7 +116,7 @@ define([
               null,
               D.a(
                 { href: "/request" },
-                "Welcome to bustabit.com, and have fun :D"
+                "Welcome to retrocrash.com, and have fun :D"
               )
             );
             messageClass = "new-user";

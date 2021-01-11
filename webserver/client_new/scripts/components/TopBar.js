@@ -104,7 +104,7 @@ define([
           { className: "title" },
           D.a(
             { href: "/" },
-            D.h1(null, this.props.isMobileOrSmall ? "BaB" : "bustabit")
+            D.h1(null, this.props.isMobileOrSmall ? "retro" : "retrocrash")
           )
         ),
         !this.props.isMobileOrSmall &&
