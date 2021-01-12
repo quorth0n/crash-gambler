@@ -144,10 +144,7 @@
 }
 
 .msg-chat-message.msg-admin-message a::before {
-  content: "[A] ";
-}
-
-.msg-chat-message.msg-admin-message a {
+  content: "A ";
   color: #ce1e1e;
 }
 
