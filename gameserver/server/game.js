@@ -68,6 +68,7 @@ function Game(lastGameId, lastHash, bankroll, gameHistory) {
             self.emit('game_starting', {
                 game_id: self.gameId,
                 max_win: self.maxWin,
+                bankroll: self.bankroll,
                 time_till_start: restartTime
             });
 
@@ -256,6 +257,7 @@ Game.prototype.getInfo = function() {
         game_id: this.gameId, // game_id of current game, if game hasnt' started its the last game
         last_hash: this.lastHash,
         max_win: this.maxWin,
+        bankroll: this.bankroll,
         // if the game is pending, elapsed is how long till it starts
         // if the game is running, elapsed is how long its running for
         /// if the game is ended, elapsed is how long since the game started

@@ -128,7 +128,8 @@ define([
           { className: "max-profit" },
           "Max profit: ",
           Engine.maxWin.toLocaleString(),
-          " satoshis"
+          " satoshis",
+          D.p(null, `Bankroll: ${Engine.bankroll && Engine.bankroll.toLocaleString()} satoshis`)
         ),
         D.canvas({
           ref: "canvas",
