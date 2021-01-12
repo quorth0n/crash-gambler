@@ -26,7 +26,7 @@ define([
 
     this.ctx = canvasNode.getContext("2d");
     var parentNode = this.getParentNodeFunc();
-    this.canvasWidth = parentNode.clientWidth - 20;
+    this.canvasWidth = parentNode.clientWidth;
     this.canvasHeight = parentNode.clientHeight - 20;
     this.canvas = canvasNode;
     this.theme = GameSettingsStore.getCurrentTheme();
@@ -66,7 +66,7 @@ define([
   Graph.prototype.onWindowResize = function () {
     var parentNode = this.getParentNodeFunc();
     this.canvasWidth = parentNode.clientWidth;
-    this.canvasHeight = parentNode.clientHeight;
+    this.canvasHeight = parentNode.clientHeight - 20;
     this.configPlotSettings();
   };
 
