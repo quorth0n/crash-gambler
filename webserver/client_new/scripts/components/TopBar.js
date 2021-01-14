@@ -99,7 +99,6 @@ define([
 
       return D.div(
         { id: "top-bar" },
-        this.props.isMobileOrSmall && Menu(),
         D.div(
           { className: "title" },
           D.a(
@@ -159,7 +158,8 @@ define([
               src: "/faq",
             })
           ),
-        userLogin
+        userLogin,
+        this.props.isMobileOrSmall && Menu(),
       );
     },
   });

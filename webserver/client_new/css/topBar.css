@@ -84,6 +84,7 @@
 
 #top-bar .user-login .register {
   display: inline-block;
+  margin-right: 0.5rem;
 }
 
 #top-bar .user-login .login {
