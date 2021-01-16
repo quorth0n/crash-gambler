@@ -52,14 +52,17 @@
 }
 
 /** bar **/
-.history {
+.history, .history tbody, .history tr {
   display: inline-flex;
   height: 25px;
   width: 100%;
+  overflow: hidden;
+}
+
+.history {
   background-color: #181a1e;
   position: relative;
   left: 3.7%;
-  overflow: hidden;
 }
 
 .history td {
