@@ -633,6 +633,41 @@ exports.getPublicStats = function (username, callback) {
   });
 };
 
+exports.makeInvestment = (userId, satoshis, callback) => {
+  assert(typeof userId === "number");
+  assert(typeof satoshis === "number");
+  assert(Math.abs(satoshis) >= 1e6);
+  
+  getClient((client, callback) => {
+    client.query(
+      "UPDATE users SET balance_satoshis = balance_satoshis + $1 WHERE id = $2",
+      [-1 * satoshis, userId],
+      function (err, response) {
+        if (err) return callback(err);
+
+        if (response.rowCount !== 1)
+          return callback(
+            new Error("Unexpected withdrawal row count: \n" + response)
+          );
+
+        client.query(
+          "INSERT INTO investments(user_id, amount) " +
+            "VALUES($1, $2) RETURNING id",
+          [userId, satoshis],
+          function (err, response) {
+            if (err) return callback(err);
+
+            var investmentId = response.rows[0].id;
+            assert(typeof investmentId === "number");
+
+            callback(null, investmentId);
+          }
+        );
+      }
+    );
+  }, callback)
+}
+
 exports.makeWithdrawal = function (
   userId,
   satoshis,
@@ -665,10 +700,10 @@ exports.makeWithdrawal = function (
           function (err, response) {
             if (err) return callback(err);
 
-            var fundingId = response.rows[0].id;
-            assert(typeof fundingId === "number");
+            var investmentId = response.rows[0].id;
+            assert(typeof investmentId === "number");
 
-            callback(null, fundingId);
+            callback(null, investmentId);
           }
         );
       }
@@ -744,14 +779,14 @@ exports.getWithdrawalsAmount = function (userId, callback) {
   );
 };
 
-exports.setFundingsWithdrawalTxid = function (fundingId, txid, callback) {
-  assert(typeof fundingId === "number");
+exports.setFundingsWithdrawalTxid = function (investmentId, txid, callback) {
+  assert(typeof investmentId === "number");
   assert(typeof txid === "string");
   assert(callback);
 
   query(
     "UPDATE fundings SET bitcoin_withdrawal_txid = $1 WHERE id = $2",
-    [txid, fundingId],
+    [txid, investmentId],
     function (err, result) {
       if (err) return callback(err);
 

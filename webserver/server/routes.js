@@ -197,6 +197,7 @@ module.exports = function(app) {
     app.post('/enable-2fa', restrict, user.enableMfa);
     app.post('/disable-2fa', restrict, user.disableMfa);
     app.post('/withdraw-request', restrict, user.handleWithdrawRequest);
+    app.post('/invest', restrict, user.invest);
     app.post('/support', restrict, contact('support'));
     app.post('/contact', contact('contact'));
     app.post('/logout', restrictRedirectToHome, user.logout);

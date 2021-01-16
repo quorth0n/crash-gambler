@@ -790,7 +790,7 @@ exports.handleWithdrawRequest = function (req, res, next) {
       warning: "Not a valid amount",
     });
 
-  amount = Math.round(parseFloat(amount) * 100);
+  amount = parseInt(amount);
   assert(Number.isFinite(amount));
 
   var minWithdraw = config.MINING_FEE + 10000;
@@ -898,6 +898,41 @@ exports.handleWithdrawRequest = function (req, res, next) {
         id: uuid.v4(),
         success: "OK",
       });
+    });
+  });
+};
+
+/**
+ * POST
+ * Restricted API
+ * Adds to user's investment balance
+ */
+exports.invest = (req, res) => {
+  const MIN_INVESTMENT = 1e6;
+
+  const { user } = req;
+  assert(user);
+
+  let { amount } = req.body;
+  amount = parseInt(amount);
+  assert(amount);
+
+  if (Math.abs(amount) < MIN_INVESTMENT) {
+    return res.status(400).json({
+      error: `Minimum investment amount is ${MIN_INVESTMENT} satoshis`,
+    });
+  }
+
+  database.makeInvestment(user.id, amount, (error, id) => {
+    if (error) {
+      return res.status(400).json({
+        error,
+      });
+    }
+
+    return res.json({
+      success: true,
+      id
     });
   });
 };

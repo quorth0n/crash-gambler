@@ -74,6 +74,20 @@ CREATE INDEX fundings_user_id_idx ON fundings USING btree (user_id);
 
 
 
+-- Investments
+
+CREATE TABLE investments (
+    id bigserial NOT NULL PRIMARY KEY,
+    user_id bigint NOT NULL REFERENCES users(id),
+    amount bigint NOT NULL,
+    created timestamp with time zone DEFAULT now() NOT NULL,
+    description text
+);
+
+CREATE INDEX investments_user_id_idx ON investments USING btree (user_id);
+
+
+
 -- Games
 
 CREATE TABLE games (

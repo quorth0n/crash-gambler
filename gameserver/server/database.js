@@ -211,7 +211,7 @@ exports.placeBet = function (amount, autoCashOut, userId, gameId, callback) {
       function (callback) {
         client.query(
           "INSERT INTO plays(user_id, game_id, bet, auto_cash_out) VALUES($1, $2, $3, $4) RETURNING id",
-          [userId, gameId, amount, autoCashOut],
+          [userId, gameId, amount - Math.floor(amount * (0.39 / 100)), autoCashOut], // take 0.39% comission of bet
           callback
         );
       },
@@ -392,7 +392,7 @@ exports.getBankroll = function (callback) {
       var profit = results.rows[0].profit - 100e8;
       assert(typeof profit === "number");
 
-      var min = 1e8;
+      var min = 10e8;
 
       callback(null, Math.max(min, profit));
     }
