@@ -1,6 +1,11 @@
-define(["react", "components/PopupFrame"], function (React, PopupFrameClass) {
+define(["react", "components/PopupFrame", "components/Invest"], function (
+  React,
+  PopupFrameClass,
+  InvestClass
+) {
   var D = React.DOM;
   const PopupFrame = React.createFactory(PopupFrameClass);
+  const Invest = React.createFactory(InvestClass);
 
   return React.createClass({
     displayName: "Menu",
@@ -48,17 +53,19 @@ define(["react", "components/PopupFrame"], function (React, PopupFrameClass) {
               width: open ? "min(25rem, 75%)" : 0,
             },
           },
-          PopupFrame({
-            render: (open) =>
-              React.createElement(
-                "a",
-                {
-                  onClick: open,
-                },
-                "Investments"
-              ),
-            src: "/invest",
-          }),
+          PopupFrame(
+            {
+              render: (open) =>
+                React.createElement(
+                  "a",
+                  {
+                    onClick: open,
+                  },
+                  "House"
+                ),
+            },
+            Invest()
+          ),
           PopupFrame({
             render: (open) =>
               React.createElement(

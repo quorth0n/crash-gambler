@@ -1,46 +1,60 @@
 {{##def.page_title = 'Stats' #}}
-
+<style>
+  .centered {
+    margin: 0 auto;
+  }
+  td:first-child {
+    text-align: left !important;
+  }
+  td:last-child {
+    text-align: right !important;
+  }
+</style>
 {{##def.content:
-            <div class="large-6 columns">
-                <table class="stats">
-                    <tbody>
-                        <tr>
-                            <td>Users</td>
-                            <td>{{=it.stats.users.count}}</td>
-                        </tr>
-                        <tr>
-                            <td>Bets</td>
-                            <td>{{=it.stats.plays.count }}</td>
-                        </tr>
-                        <tr>
-                            <td>Bankroll</td>
-                            <td>
+<div class="large-8 centered">
+  <table class="stats">
+    <tbody>
+      <tr>
+        <td>Users</td>
+        <td></td>
+        <td>{{=it.stats.users.count}}</td>
+      </tr>
+      <tr>
+        <td>Bets</td>
+        <td></td>
+        <td>{{=it.stats.plays.count }}</td>
+      </tr>
+      <tr>
+        <td>Bankroll</td>
+        <td></td>
+        <td>
                                 {{#def.format: {n: it.stats.plays.total_bet - it.stats.plays.cashed_out - it.stats.plays.bonused + it.stats.bankroll_offset } }} satoshis
                             </td>
                         </tr>
                         <tr>
                             <td>Wagered</td>
-                            <td>{{#def.format: {n: it.stats.plays.total_bet } }} satoshis</td>
-                        </tr>
-                        <tr>
-                            <td>Return to player</td>
-                            <td>{{#def.format: {n: (9 + it.stats.plays.cashed_out + it.stats.plays.bonused) } }} satoshis <small>(
+        <td></td>
+        <td>{{#def.format: {n: it.stats.plays.total_bet } }} satoshis</td>
+      </tr>
+      <tr>
+        <td>Return to player</td>
+        <td>
                                 {{= ((it.stats.plays.cashed_out + it.stats.plays.bonused) / it.stats.plays.total_bet * 100).toFixed(2) }}%
-                                )</small></td>
+        </td>
+                            <td>{{#def.format: {n: (9 + it.stats.plays.cashed_out + it.stats.plays.bonused) } }} satoshis 
+                              </td>
                         </tr>
                         <tr>
                             <td>Profit</td>
                             <td>
+                                {{= ((it.stats.plays.total_bet - it.stats.plays.cashed_out - it.stats.plays.bonused ) / it.stats.plays.total_bet * 100).toFixed(2) }}%
+                            </td>
+                            <td>
                                 {{#def.format: {n: it.stats.plays.total_bet - it.stats.plays.cashed_out - it.stats.plays.bonused  } }} satoshis
-                                <small>(
-                                    {{= ((it.stats.plays.total_bet - it.stats.plays.cashed_out - it.stats.plays.bonused ) / it.stats.plays.total_bet * 100).toFixed(2) }}%
-                                    )</small>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <small>Generated {{! it.generated }}</small>
-            </div>
- #}}
-
-{{#def.include('./template/main_old')}}
+  <small style="margin-left: 0.5rem">Generated {{! it.generated }}</small>
+</div>
+#}} {{#def.include('./template/main_old')}}

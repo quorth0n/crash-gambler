@@ -925,6 +925,13 @@ exports.invest = (req, res) => {
 
   database.makeInvestment(user.id, amount, (error, id) => {
     if (error) {
+      if (error.code === "23514") {
+        error = "Amount exceeds account balance";
+      } else {
+        console.error(error);
+        error = error.message;
+      }
+
       return res.status(400).json({
         error,
       });
@@ -932,7 +939,7 @@ exports.invest = (req, res) => {
 
     return res.json({
       success: true,
-      id
+      id,
     });
   });
 };

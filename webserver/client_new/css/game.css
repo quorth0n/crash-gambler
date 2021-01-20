@@ -288,6 +288,7 @@ body {
 
   background: rgba(0, 0, 0, 0.6);
 }
+
 .modal-guts {
   position: absolute;
   top: 0;
@@ -298,6 +299,7 @@ body {
   padding: 2rem;
   padding-top: 3rem;
   border: 0;
+  color: #181a1e;
 }
 
 .modal .close {
@@ -316,4 +318,50 @@ body {
   font-size: 1.3rem;
   background: transparent;
   cursor: pointer;
+}
+
+.investment-container .stats-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.stat span {
+  display: block;
+}
+
+.stat .number {
+  font-size: 1.75rem;
+  line-height: 1.75;
+}
+
+.stat .sub {
+  opacity: 75%;
+}
+
+.investment-container li {
+  margin-bottom: 0.75rem;
+}
+
+.investment-form {
+  margin-top: 1rem;
+}
+
+.investment-form label {
+}
+
+.investment-form #amount {
+  width: 100%;
+}
+
+.investment-form *[type="submit"] {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.investment-form .error {
+  color: red;
+  margin: 1rem 0;
 }

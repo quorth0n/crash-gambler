@@ -21,7 +21,7 @@ define(["react"], function (React) {
 
     render: function () {
       const { open } = this.state;
-      const { src, render } = this.props;
+      const { src, children, render } = this.props;
 
       return D.div(
         null,
@@ -29,8 +29,10 @@ define(["react"], function (React) {
         D.div({ className: `modal-overlay ${!open && "closed"}` }),
         D.div(
           { className: `modal ${!open && "closed"}` },
-          D.button({ className: "close", onClick: this._close }, "✕"),
-          D.iframe({ className: "modal-guts", ...(open && { src }) })
+          D.button({ className: "close", onClick: this._close }, "\u2715"),
+          src
+            ? D.iframe({ className: "modal-guts", ...(open && { src }) })
+            : D.div({ className: "modal-guts" }, children)
         )
       );
     },

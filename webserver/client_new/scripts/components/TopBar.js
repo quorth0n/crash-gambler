@@ -6,6 +6,7 @@ define([
   "game-logic/clib",
   "components/Menu",
   "components/PopupFrame",
+  "components/Invest",
 ], function (
   React,
   Engine,
@@ -13,11 +14,13 @@ define([
   GameSettingsActions,
   Clib,
   MenuClass,
-  PopupFrameClass
+    PopupFrameClass,
+  InvestClass
 ) {
   var D = React.DOM;
   const Menu = React.createFactory(MenuClass);
   const PopupFrame = React.createFactory(PopupFrameClass);
+  const Invest = React.createFactory(InvestClass);
 
   function getState() {
     return {
@@ -109,18 +112,20 @@ define([
         !this.props.isMobileOrSmall &&
           D.div(
             { className: "tabs" },
-            PopupFrame({
-              render: (open) =>
-                React.createElement(
-                  "a",
-                  {
-                    onClick: open,
-                  },
-                  D.i({ className: "fa fa-bank" }),
-                  "House"
-                ),
-              src: "/bankroll",
-            }),
+            PopupFrame(
+              {
+                render: (open) =>
+                  React.createElement(
+                    "a",
+                    {
+                      onClick: open,
+                    },
+                    D.i({ className: "fa fa-bank" }),
+                    "House"
+                  ),
+              },
+              Invest()
+            ),
             PopupFrame({
               render: (open) =>
                 React.createElement(
@@ -159,7 +164,7 @@ define([
             })
           ),
         userLogin,
-        this.props.isMobileOrSmall && Menu(),
+        this.props.isMobileOrSmall && Menu()
       );
     },
   });
