@@ -14,11 +14,13 @@ CREATE TABLE users (
     password text NOT NULL,
     mfa_secret text,
     balance_satoshis bigint DEFAULT 0 NOT NULL,
+    investment_satoshis bigint DEFAULT 0 NOT NULL,
     gross_profit bigint DEFAULT 0 NOT NULL,
     net_profit bigint DEFAULT 0 NOT NULL,
     games_played bigint DEFAULT 0 NOT NULL,
     userclass UserClassEnum DEFAULT 'user' NOT NULL,
-    CONSTRAINT users_balance_satoshis_check CHECK ((balance_satoshis >= 0))
+    CONSTRAINT users_balance_satoshis_check CHECK ((balance_satoshis >= 0)),
+    CONSTRAINT users_investment_satoshis_check CHECK ((investment_satoshis >= 0))
 );
 
 ALTER TABLE ONLY users

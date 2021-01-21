@@ -211,7 +211,12 @@ exports.placeBet = function (amount, autoCashOut, userId, gameId, callback) {
       function (callback) {
         client.query(
           "INSERT INTO plays(user_id, game_id, bet, auto_cash_out) VALUES($1, $2, $3, $4) RETURNING id",
-          [userId, gameId, amount - Math.floor(amount * (0.39 / 100)), autoCashOut], // take 0.39% comission of bet
+          [
+            userId,
+            gameId,
+            amount - Math.floor(amount * (0.39 / 100)),
+            autoCashOut,
+          ], // take 0.39% comission of bet
           callback
         );
       },
@@ -226,6 +231,32 @@ exports.placeBet = function (amount, autoCashOut, userId, gameId, callback) {
       callback(null, playId);
     });
   }, callback);
+};
+
+const distributeInvestors = (client, gameId, callback) => {
+  assert(typeof gameId === "number");
+  assert(typeof callback === "function");
+
+  client.query(
+    `
+        UPDATE users 
+        SET 
+            investment_satoshis = investment_satoshis + FLOOR((investment_satoshis / total.investments) * COALESCE(losers.pot * 0.75, 0))
+        FROM (
+            SELECT SUM(bet) AS pot FROM plays WHERE game_id = $1 AND cash_out IS NULL
+          ) AS losers
+        CROSS JOIN (
+          SELECT SUM(investment_satoshis) AS investments FROM users
+        ) AS total
+        WHERE investment_satoshis > 0
+      `,
+    [gameId],
+    (err) => {
+      if (err) return callback(err);
+
+      callback();
+    }
+  );
 };
 
 var endGameQuery =
@@ -246,52 +277,57 @@ exports.endGame = function (gameId, bonuses, callback) {
   assert(typeof callback === "function");
 
   getClient(function (client, callback) {
-    client.query(
-      "UPDATE games SET ended = true WHERE id = $1",
-      [gameId],
-      function (err) {
-        if (err) return callback(new Error("Could not end game, got: " + err));
+    distributeInvestors(client, gameId, (err) => {
+      if (err) callback(err);
 
-        var userIds = [];
-        var playIds = [];
-        var bonusesAmounts = [];
+      client.query(
+        "UPDATE games SET ended = true WHERE id = $1",
+        [gameId],
+        function (err) {
+          if (err)
+            return callback(new Error("Could not end game, got: " + err));
 
-        bonuses.forEach(function (bonus) {
-          assert(lib.isInt(bonus.user.id));
-          userIds.push(bonus.user.id);
-          assert(lib.isInt(bonus.playId));
-          playIds.push(bonus.playId);
-          assert(lib.isInt(bonus.amount) && bonus.amount > 0);
-          bonusesAmounts.push(bonus.amount);
-        });
+          var userIds = [];
+          var playIds = [];
+          var bonusesAmounts = [];
 
-        assert(
-          userIds.length == playIds.length &&
-            playIds.length == bonusesAmounts.length
-        );
+          bonuses.forEach(function (bonus) {
+            assert(lib.isInt(bonus.user.id));
+            userIds.push(bonus.user.id);
+            assert(lib.isInt(bonus.playId));
+            playIds.push(bonus.playId);
+            assert(lib.isInt(bonus.amount) && bonus.amount > 0);
+            bonusesAmounts.push(bonus.amount);
+          });
 
-        if (userIds.length === 0) return callback();
+          assert(
+            userIds.length == playIds.length &&
+              playIds.length == bonusesAmounts.length
+          );
 
-        client.query(
-          endGameQuery,
-          [userIds, playIds, bonusesAmounts],
-          function (err, result) {
-            if (err) return callback(err);
+          if (userIds.length === 0) return callback();
 
-            if (result.rows[0].count !== userIds.length) {
-              throw new Error(
-                "Mismatch row count: " +
-                  result.rows[0].count +
-                  " and " +
-                  userIds.length
-              );
+          client.query(
+            endGameQuery,
+            [userIds, playIds, bonusesAmounts],
+            function (err, result) {
+              if (err) return callback(err);
+
+              if (result.rows[0].count !== userIds.length) {
+                throw new Error(
+                  "Mismatch row count: " +
+                    result.rows[0].count +
+                    " and " +
+                    userIds.length
+                );
+              }
+
+              callback();
             }
-
-            callback();
-          }
-        );
-      }
-    );
+          );
+        }
+      );
+    });
   }, callback);
 };
 
