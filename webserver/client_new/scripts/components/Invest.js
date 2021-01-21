@@ -4,7 +4,16 @@ define(["react"], function (React) {
   return React.createClass({
     displayName: "Invest",
 
-    getInitialState: () => ({ amount: 1e6, invest: "Invest" }),
+    getInitialState: () => ({ amount: 1e6, invest: "Invest", stats: {} }),
+
+    componentDidMount: async function () {
+      const stats = await fetch("/invest").then((d) => d.json());
+
+      this.setState({
+        ...this.state,
+        stats,
+      });
+    },
 
     _onAmtChange: function (e) {
       this.setState({ ...this.state, amount: e.target.value });
@@ -17,8 +26,13 @@ define(["react"], function (React) {
     _handleSubmit: async function (e) {
       e.preventDefault();
 
+      this.setState({
+        ...this.state,
+        error: null,
+      });
+
       const { amount, invest } = this.state;
-      console.log(invest);
+
       const res = await fetch("/invest", {
         method: "POST",
         headers: {
@@ -35,27 +49,43 @@ define(["react"], function (React) {
           error: res.error,
         });
       }
+
+      const stats = await fetch("/invest").then((d) => d.json());
+
+      this.setState({
+        ...this.state,
+        stats,
+      });
     },
 
     render: function () {
+      const {
+        total_invested,
+        total_divested,
+        balance,
+        total_investments,
+      } = this.state.stats;
+
       return D.div(
         { className: "investment-container" },
-        D.h3(null, "Investment stats"),
         D.div(
           { className: "stats-grid" },
           D.div(
             { className: "stat" },
-            D.span({ className: "number" }, "0.00"),
+            D.span({ className: "number" }, total_invested || "0.00"),
             D.span({ className: "sub" }, "Total invested")
           ),
           D.div(
             { className: "stat" },
-            D.span({ className: "number" }, "0.00"),
+            D.span({ className: "number" }, total_divested || "0.00"),
             D.span({ className: "sub" }, "Total divested")
           ),
           D.div(
             { className: "stat" },
-            D.span({ className: "number" }, "0.00"),
+            D.span(
+              { className: "number" },
+              balance - (total_invested - total_divested) || "0.00"
+            ),
             D.span({ className: "sub" }, "Profit")
           )
         ),
@@ -63,12 +93,15 @@ define(["react"], function (React) {
           { className: "stats-grid" },
           D.div(
             { className: "stat" },
-            D.span({ className: "number" }, "0.00"),
+            D.span({ className: "number" }, balance || "0.00"),
             D.span({ className: "sub" }, "Active investment")
           ),
           D.div(
             { className: "stat" },
-            D.span({ className: "number" }, "0.00"),
+            D.span(
+              { className: "number" },
+              `${((balance / total_investments) * 100).toFixed(2) || "0.00"}%`
+            ),
             D.span({ className: "sub" }, "Stake")
           )
         ),
@@ -76,6 +109,7 @@ define(["react"], function (React) {
           {
             style: {
               listStyle: "inside",
+              marginTop: "2rem",
             },
           },
           D.li(null, "The minimum amount for investments is (100M satoshi)."),
@@ -91,9 +125,13 @@ define(["react"], function (React) {
         D.form(
           { className: "investment-form", onSubmit: this._handleSubmit },
           D.div(
-            {},
+            { className: "radios" },
             D.label(
-              null,
+              {
+                style: {
+                  marginRight: "1rem",
+                },
+              },
               D.input({
                 type: "radio",
                 value: "Invest",

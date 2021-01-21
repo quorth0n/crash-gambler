@@ -88,26 +88,6 @@ CREATE TABLE investments (
 
 CREATE INDEX investments_user_id_idx ON investments USING btree (user_id);
 
-CREATE OR REPLACE FUNCTION check_withdrawal_amount()
-    RETURNS trigger AS $$
-
-    BEGIN
-        IF NEW.amount < 0 THEN
-            IF ((SELECT SUM(amount) FROM investments WHERE user_id = NEW.user_id) + NEW.amount) < 0 THEN
-                RAISE EXCEPTION 'Cannot withdrawal more than investment balance';
-            END IF;
-        END IF;
-
-       RETURN NEW;
-    END;
-
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER withdrawal_trigger 
-    BEFORE INSERT ON investments 
-    FOR EACH ROW
-    EXECUTE PROCEDURE check_withdrawal_amount();
-
 
 
 -- Games

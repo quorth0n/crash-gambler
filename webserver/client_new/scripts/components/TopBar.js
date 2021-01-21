@@ -14,7 +14,7 @@ define([
   GameSettingsActions,
   Clib,
   MenuClass,
-    PopupFrameClass,
+  PopupFrameClass,
   InvestClass
 ) {
   var D = React.DOM;
@@ -69,11 +69,6 @@ define([
       GameSettingsActions.toggleTheme();
     },
 
-    _toggleFullScreen: function () {
-      window.screenfull.toggle();
-      this.setState({ fullScreen: !this.state.fullScreen });
-    },
-
     render: function () {
       var userLogin;
       if (this.state.username) {
@@ -112,20 +107,21 @@ define([
         !this.props.isMobileOrSmall &&
           D.div(
             { className: "tabs" },
-            PopupFrame(
-              {
-                render: (open) =>
-                  React.createElement(
-                    "a",
-                    {
-                      onClick: open,
-                    },
-                    D.i({ className: "fa fa-bank" }),
-                    "House"
-                  ),
-              },
-              Invest()
-            ),
+            this.state.username &&
+              PopupFrame(
+                {
+                  render: (open) =>
+                    React.createElement(
+                      "a",
+                      {
+                        onClick: open,
+                      },
+                      D.i({ className: "fa fa-bank" }),
+                      "House"
+                    ),
+                },
+                Invest()
+              ),
             PopupFrame({
               render: (open) =>
                 React.createElement(
@@ -164,7 +160,10 @@ define([
             })
           ),
         userLogin,
-        this.props.isMobileOrSmall && Menu()
+        this.props.isMobileOrSmall &&
+          Menu({
+            loggedIn: !!this.state.username,
+          })
       );
     },
   });

@@ -926,7 +926,10 @@ exports.invest = (req, res) => {
   database.makeInvestment(user.id, amount, (error, id) => {
     if (error) {
       if (error.code === "23514") {
-        error = "Amount exceeds account balance";
+        error =
+          amount > 0
+            ? "Amount exceeds account balance"
+            : "Amount is greater than invested total";
       } else {
         console.error(error);
         error = error.message;
@@ -949,40 +952,18 @@ exports.invest = (req, res) => {
  * Restricted API
  * Returns invested balance
  */
-exports.invest = (req, res) => {
-  const MIN_INVESTMENT = 1e6;
-
+exports.investStats = (req, res) => {
   const { user } = req;
   assert(user);
 
-  let { amount } = req.body;
-  amount = parseInt(amount);
-  assert(amount);
-
-  if (Math.abs(amount) < MIN_INVESTMENT) {
-    return res.status(400).json({
-      error: `Minimum investment amount is ${MIN_INVESTMENT} satoshis`,
-    });
-  }
-
-  database.makeInvestment(user.id, amount, (error, id) => {
+  database.getInvestmentStats(user.id, (error, results) => {
     if (error) {
-      if (error.code === "23514") {
-        error = "Amount exceeds account balance";
-      } else {
-        console.error(error);
-        error = error.message;
-      }
-
       return res.status(400).json({
         error,
       });
     }
 
-    return res.json({
-      success: true,
-      id,
-    });
+    return res.json(results);
   });
 };
 

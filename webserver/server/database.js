@@ -25,6 +25,11 @@ types.setTypeParser(20, function (val) {
   return val === null ? null : parseInt(val);
 });
 
+types.setTypeParser(1700, function (val) {
+  // parse numeric as a float
+  return val === null ? null : parseFloat(val);
+});
+
 // callback is called with (err, client, done)
 function connect(callback) {
   return pool.connect(callback);
@@ -637,11 +642,11 @@ exports.makeInvestment = (userId, satoshis, callback) => {
   assert(typeof userId === "number");
   assert(typeof satoshis === "number");
   assert(Math.abs(satoshis) >= 1e6);
-  
+
   getClient((client, callback) => {
     client.query(
-      "UPDATE users SET balance_satoshis = balance_satoshis + $1 WHERE id = $2",
-      [-1 * satoshis, userId],
+      "UPDATE users SET balance_satoshis = balance_satoshis - $1, investment_satoshis = investment_satoshis + $1 WHERE id = $2",
+      [satoshis, userId],
       function (err, response) {
         if (err) return callback(err);
 
@@ -665,8 +670,44 @@ exports.makeInvestment = (userId, satoshis, callback) => {
         );
       }
     );
-  }, callback)
-}
+  }, callback);
+};
+
+exports.getInvestmentStats = function (userId, callback) {
+  var sql =
+    "SELECT SUM(amount) FILTER (WHERE amount > 0) AS total_invested, " +
+    "SUM(amount) FILTER (WHERE amount < 0) AS total_divested " +
+    "FROM investments WHERE user_id = $1";
+
+  query(sql, [userId], function (err, result) {
+    if (err) return callback(err);
+
+    if (result.rows.length !== 1) return callback("USER_DOES_NOT_EXIST");
+
+    query(
+      "SELECT investment_satoshis AS balance FROM users WHERE id = $1",
+      [userId],
+      (err, balanceResult) => {
+        if (err) return callback(err);
+
+        if (result.rows.length !== 1) return callback("USER_DOES_NOT_EXIST");
+
+        query(
+          "SELECT SUM(investment_satoshis) AS total_investments FROM users",
+          (err, totalResult) => {
+            if (err) return callback(err);
+
+            return callback(null, {
+              ...result.rows[0],
+              ...balanceResult.rows[0],
+              ...totalResult.rows[0],
+            });
+          }
+        );
+      }
+    );
+  });
+};
 
 exports.makeWithdrawal = function (
   userId,

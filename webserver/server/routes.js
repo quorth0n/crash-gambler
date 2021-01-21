@@ -226,6 +226,8 @@ module.exports = function (app) {
   });
   app.get("/stats", stats.index);
 
+  app.get("/invest", restrict, user.investStats);
+
   // Admin stuff
   app.get("/admin-giveaway", adminRestrict, admin.giveAway);
   app.post("/admin-giveaway", adminRestrict, admin.giveAwayHandle);

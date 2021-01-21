@@ -11,7 +11,7 @@ define(["react", "components/PopupFrame", "components/Invest"], function (
     displayName: "Menu",
 
     propTypes: {
-      isMobileOrSmall: React.PropTypes.bool.isRequired,
+      loggedIn: React.PropTypes.bool.isRequired,
     },
 
     getInitialState: function () {
@@ -30,6 +30,7 @@ define(["react", "components/PopupFrame", "components/Invest"], function (
     },
 
     render: function () {
+      const { loggedIn } = this.props;
       const { open } = this.state;
 
       return D.div(
@@ -53,19 +54,20 @@ define(["react", "components/PopupFrame", "components/Invest"], function (
               width: open ? "min(25rem, 75%)" : 0,
             },
           },
-          PopupFrame(
-            {
-              render: (open) =>
-                React.createElement(
-                  "a",
-                  {
-                    onClick: open,
-                  },
-                  "House"
-                ),
-            },
-            Invest()
-          ),
+          loggedIn &&
+            PopupFrame(
+              {
+                render: (open) =>
+                  React.createElement(
+                    "a",
+                    {
+                      onClick: open,
+                    },
+                    "House"
+                  ),
+              },
+              Invest()
+            ),
           PopupFrame({
             render: (open) =>
               React.createElement(
@@ -88,32 +90,36 @@ define(["react", "components/PopupFrame", "components/Invest"], function (
               ),
             src: "/leaderboard",
           }),
-          D.hr(),
-          PopupFrame({
-            render: (open) =>
-              React.createElement(
-                "a",
-                {
-                  onClick: open,
+          loggedIn && [
+            D.hr({ key: "hr" }),
+            PopupFrame({
+              render: (open) =>
+                React.createElement(
+                  "a",
+                  {
+                    onClick: open,
+                  },
+                  "Account"
+                ),
+              src: "/account",
+              key: "acc",
+            }),
+            React.createElement(
+              "a",
+              {
+                key: "logout",
+                href: "#",
+                onClick: () => {
+                  if (confirm("Are you sure you wish to log out?")) {
+                    fetch("/logout", { method: "POST" }).then(() => {
+                      location.href = "/";
+                    });
+                  }
                 },
-                "Account"
-              ),
-            src: "/account",
-          }),
-          React.createElement(
-            "a",
-            {
-              href: "#",
-              onClick: () => {
-                if (confirm("Are you sure you wish to log out?")) {
-                  fetch("/logout", { method: "POST" }).then(() => {
-                    location.href = "/";
-                  });
-                }
               },
-            },
-            "Logout"
-          )
+              "Logout"
+            ),
+          ]
         )
       );
     },

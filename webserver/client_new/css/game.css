@@ -346,10 +346,14 @@ body {
 }
 
 .investment-form {
-  margin-top: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.investment-form label {
+.investment-form .radios {
+  text-align: center;
+  margin-bottom: 0.75rem;
 }
 
 .investment-form #amount {
@@ -357,11 +361,12 @@ body {
 }
 
 .investment-form *[type="submit"] {
-  margin-top: 1rem;
-  font-size: 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  padding: 0.5rem;
 }
 
 .investment-form .error {
   color: red;
-  margin: 1rem 0;
+  margin: 0.75rem 0;
 }
