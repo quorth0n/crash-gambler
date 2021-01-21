@@ -47,9 +47,9 @@ define(["seedrandom", "lodash", "constants/AppConstants"], function (
 
       if (bet < 1) return new Error("The bet should be at least 1 bit");
 
-      if (bet * 100 > AppConstants.Engine.MAX_BET)
+      if (bet > AppConstants.Engine.MAX_BET)
         return new Error(
-          "The bet must be less no more than " +
+          "The bet must be less than " +
             formatSatoshis(AppConstants.Engine.MAX_BET) +
             " satoshis"
         );

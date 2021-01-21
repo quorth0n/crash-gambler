@@ -81,7 +81,7 @@ define(["constants/AppConstants", "game-logic/clib"], function (
 
     /** Parse the bet string in bits and returns a integer **/
     parseBet: function (betStringBits) {
-      return parseInt(betStringBits.replace(/k/g, "000")) * 100;
+      return parseInt(betStringBits.replace(/k/g, "000"));
     },
 
     /** Convert the cash out string into an integer **/

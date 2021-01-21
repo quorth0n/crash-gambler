@@ -34,14 +34,14 @@
                     </td>
                     <td>
                         {{? play.cash_out}}
-                        {{#def.format: {n: play.cash_out / play.bet * 100, decimals: 2} }}x
+                        {{#def.format: {n: play.cash_out / play.bet , decimals: 2} }}x
                         {{??}}
                         Lose
                         {{?}}
                     </td>
                     <td>
                         {{? play.bonus }}
-                           {{#def.format: {n: play.bonus/play.bet* 100 * 100, decimals: 2} }}%
+                           {{#def.format: {n: play.bonus/play.bet, decimals: 2} }}%
                         {{??}}
                           -
                         {{?}}
