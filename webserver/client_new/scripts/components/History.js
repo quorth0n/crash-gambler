@@ -64,7 +64,7 @@ define(["react", "game-logic/clib", "game-logic/engine"], function (
           );
         });
 
-      return D.table({ className: "history" }, D.tbody(null, cols));
+      return D.table({ className: "history" }, D.tbody(null, D.tr(null, cols)));
     },
   });
 });
