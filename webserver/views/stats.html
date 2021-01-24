@@ -52,7 +52,7 @@
       <tr>
         <td> <i class="fa fa-credit-card"></i> Investors' Profit</td>
         <td>
-          {{= (it.stats.users.total_invested / it.stats.investments.sum * 100).toFixed(2) }}%
+          {{= ((it.stats.users.total_invested / it.stats.investments.sum * 100) || 0).toFixed(2) }}%
         </td>
         <td>
           {{#def.format: {n: it.stats.users.total_invested } }} satoshis
