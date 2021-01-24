@@ -264,8 +264,7 @@ body {
   left: 50%;
   top: 50%;
 
-  /* Use this for centering if unknown width/height */
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
 
   /* If known, negative margins are probably better (less chance of blurry text). */
   /* margin: -200px 0 0 -200px; */
@@ -273,9 +272,39 @@ body {
   background: rgb(240, 238, 238);
   box-shadow: 0 0 60px 10px rgba(0, 0, 0, 0.9);
   border-radius: 1rem;
+
+  animation: show 0.25s;
 }
+
+@keyframes show {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    z-index: -1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    z-index: 10001;
+  }
+}
+
 .closed {
-  display: none;
+  animation: hide 0.25s;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+@keyframes hide {
+  from {
+    z-index: 10001;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  to {
+    z-index: -1;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
 }
 
 .modal-overlay {
