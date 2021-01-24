@@ -908,7 +908,10 @@ exports.getSiteStats = function (callback) {
 
   var tasks = [
     function (callback) {
-      query("SELECT COUNT(*) FROM users", as("users", callback));
+      query(
+        "SELECT COUNT(*) count, COALESCE(SUM(investment_satoshis), 0)::bigint total_invested FROM users",
+        as("users", callback)
+      );
     },
     function (callback) {
       query("SELECT COUNT(*) FROM games", as("games", callback));
@@ -934,6 +937,12 @@ exports.getSiteStats = function (callback) {
           "SUM(plays.bonus)::bigint bonused " +
           "FROM plays",
         as("plays", callback)
+      );
+    },
+    function (callback) {
+      query(
+        "SELECT COALESCE(SUM(amount), 0)::bigint sum FROM investments",
+        as("investments", callback)
       );
     },
   ];
