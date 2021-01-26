@@ -132,10 +132,10 @@ define([
       bitsPlaying + bitsCashedOut + bitsCashedOutAfterMe + myBet;
 
     return {
-      playingLost: (bitsPlaying / totalAmountPlaying) * 100 * 100,
-      cashedWon: (bitsCashedOut / totalAmountPlaying) * 100 * 100,
-      cashedWonAfter: (bitsCashedOutAfterMe / totalAmountPlaying) * 100 * 100,
-      me: (myBet / totalAmountPlaying) * 100 * 100,
+      playingLost: (bitsPlaying / totalAmountPlaying) * 100,
+      cashedWon: (bitsCashedOut / totalAmountPlaying) * 100,
+      cashedWonAfter: (bitsCashedOutAfterMe / totalAmountPlaying) * 100,
+      me: (myBet / totalAmountPlaying) * 100,
     };
   }
 });

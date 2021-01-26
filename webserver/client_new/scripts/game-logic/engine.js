@@ -457,7 +457,7 @@ define([
 
   /**
    * Places a bet with a giving amount.
-   * @param {number} amount - Bet amount in bits
+   * @param {number} amount - Bet amount in satoshis
    * @param {number} autoCashOut - Percentage of self cash out
    * @param {function} callback(err, result)
    */
@@ -468,10 +468,8 @@ define([
       !autoCashOut || (typeof autoCashOut === "number" && autoCashOut >= 100)
     );
 
-    if (!Clib.isInteger(amount) || !(amount % 100 == 0))
-      return console.error(
-        "The bet amount should be integer and divisible by 100"
-      );
+    if (!Clib.isInteger(amount))
+      return console.error("The bet amount should be integer");
 
     this.nextBetAmount = amount;
     this.nextAutoCashout = autoCashOut;

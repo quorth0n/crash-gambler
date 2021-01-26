@@ -6,7 +6,7 @@ define(["seedrandom", "lodash", "constants/AppConstants"], function (
   var rng;
 
   function formatSatoshis(n, decimals) {
-    return formatDecimals(n / 100, decimals);
+    return formatDecimals(n, decimals);
   }
 
   function formatDecimals(n, decimals) {

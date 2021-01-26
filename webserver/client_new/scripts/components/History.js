@@ -58,7 +58,7 @@ define(["react", "game-logic/clib", "game-logic/engine"], function (
                 target: "_blank",
                 className: className,
               },
-              Clib.formatSatoshis(game.game_crash),
+              Clib.formatDecimals(game.game_crash / 100),
               D.i(null, "x")
             )
           );
