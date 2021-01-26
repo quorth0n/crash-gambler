@@ -14,7 +14,7 @@ define(["seedrandom", "lodash", "constants/AppConstants"], function (
       if (n % 100 === 0) decimals = 0;
       else decimals = 2;
     }
-    return n
+    return (n || 0)
       .toFixed(decimals)
       .toString()
       .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
