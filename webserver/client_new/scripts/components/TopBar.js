@@ -97,7 +97,7 @@ define([
 
       return D.div(
         { id: "top-bar" },
-        D.div(
+        D.h1(
           { className: "title" },
           D.a(
             { href: "/" },

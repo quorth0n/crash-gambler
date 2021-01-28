@@ -274,6 +274,8 @@ body {
   border-radius: 1rem;
 
   animation: show 0.25s;
+
+  user-select: text;
 }
 
 @keyframes show {
