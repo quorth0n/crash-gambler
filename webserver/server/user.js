@@ -908,7 +908,7 @@ exports.handleWithdrawRequest = function (req, res, next) {
  * Adds to user's investment balance
  */
 exports.invest = (req, res) => {
-  const MIN_INVESTMENT = 1e6;
+  const MIN_INVESTMENT = 1e5;
 
   const { user } = req;
   assert(user);

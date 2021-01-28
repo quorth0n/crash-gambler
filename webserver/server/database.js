@@ -641,7 +641,7 @@ exports.getPublicStats = function (username, callback) {
 exports.makeInvestment = (userId, satoshis, callback) => {
   assert(typeof userId === "number");
   assert(typeof satoshis === "number");
-  assert(Math.abs(satoshis) >= 1e6);
+  assert(Math.abs(satoshis) >= 1e5);
 
   getClient((client, callback) => {
     client.query(

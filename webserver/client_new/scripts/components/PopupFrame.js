@@ -30,9 +30,10 @@ define(["react"], function (React) {
         D.div(
           { className: `modal ${!open && "closed"}` },
           D.button({ className: "close", onClick: this._close }, "\u2715"),
-          src
-            ? D.iframe({ className: "modal-guts", ...(open && { src }) })
-            : D.div({ className: "modal-guts" }, children)
+          open &&
+            (src
+              ? D.iframe({ className: "modal-guts", src })
+              : D.div({ className: "modal-guts" }, children))
         )
       );
     },

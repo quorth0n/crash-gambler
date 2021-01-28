@@ -242,9 +242,12 @@ const distributeInvestors = (client, gameId, callback) => {
         UPDATE users 
         SET 
             investment_satoshis = investment_satoshis + FLOOR((investment_satoshis / total.investments) * COALESCE(losers.pot * 0.75, 0))
+              - FLOOR((investment_satoshis / total.investments) * COALESCE(winners.pot, 0))
         FROM (
             SELECT SUM(bet) AS pot FROM plays WHERE game_id = $1 AND cash_out IS NULL
-          ) AS losers
+          ) AS losers, (
+            SELECT SUM(cash_out) AS pot FROM plays WHERE game_id = $1
+          ) AS winners
         CROSS JOIN (
           SELECT SUM(investment_satoshis) AS investments FROM users
         ) AS total

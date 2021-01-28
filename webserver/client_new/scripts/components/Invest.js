@@ -4,7 +4,7 @@ define(["react"], function (React) {
   return React.createClass({
     displayName: "Invest",
 
-    getInitialState: () => ({ amount: 1e6, invest: "Invest", stats: {} }),
+    getInitialState: () => ({ amount: 1e5, invest: "Invest", stats: {} }),
 
     componentDidMount: async function () {
       const stats = await fetch("/invest").then((d) => d.json());
@@ -84,7 +84,7 @@ define(["react"], function (React) {
             { className: "stat" },
             D.span(
               { className: "number" },
-              balance - (total_invested - total_divested) || "0.00"
+              balance - (total_invested + total_divested) || "0.00"
             ),
             D.span({ className: "sub" }, "Profit")
           )
@@ -100,7 +100,7 @@ define(["react"], function (React) {
             { className: "stat" },
             D.span(
               { className: "number" },
-              `${((balance / total_investments) * 100).toFixed(2) || "0.00"}%`
+              `${((balance / total_investments) * 100 || 0).toFixed(2)}%`
             ),
             D.span({ className: "sub" }, "Stake")
           )
@@ -112,14 +112,14 @@ define(["react"], function (React) {
               marginTop: "2rem",
             },
           },
-          D.li(null, "The minimum amount for investments is (100M satoshi)."),
+          D.li(null, "The minimum amount for investments is 100k satoshi."),
           D.li(
             null,
             "A dilution fee of 1% will be applied to new investments, this dilution fee will be shared over to everyone with an active investment."
           ),
           D.li(
             null,
-            "A commission of 0.20% of the wagered amount is charged on returns and loses for each game."
+            "A commission of 0.39% of the wagered amount is charged on returns and loses for each game."
           )
         ),
         D.form(
@@ -161,8 +161,8 @@ define(["react"], function (React) {
             D.input({
               id: "amount",
               type: "number",
-              placeholder: 1e6,
-              min: 1e6,
+              placeholder: 1e5,
+              min: 1e5,
               max: Number.MAX_VALUE,
               value: this.state.amount,
               onChange: this._onAmtChange,
