@@ -645,7 +645,7 @@ exports.makeInvestment = (userId, satoshis, callback) => {
 
   getClient((client, callback) => {
     client.query(
-      "UPDATE users SET balance_satoshis = balance_satoshis - $1, investment_satoshis = investment_satoshis + $1 WHERE id = $2",
+      "UPDATE users SET balance_satoshis = balance_satoshis - $1, investment_satoshis = investment_satoshis + FLOOR($1 * 0.99) WHERE id = $2",
       [satoshis, userId],
       function (err, response) {
         if (err) return callback(err);
@@ -665,7 +665,23 @@ exports.makeInvestment = (userId, satoshis, callback) => {
             var investmentId = response.rows[0].id;
             assert(typeof investmentId === "number");
 
-            callback(null, investmentId);
+            client.query(
+              `
+                UPDATE users 
+                SET 
+                  investment_satoshis = investment_satoshis + FLOOR((investment_satoshis / total.investments) * 0.5 * 0.01 * $1)
+                FROM (
+                  SELECT SUM(investment_satoshis) AS investments FROM users
+                ) AS total
+                WHERE investment_satoshis > 0
+              `,
+              [satoshis],
+              (err, response) => {
+                if (err) return callback(err);
+
+                callback(null, investmentId);
+              }
+            );
           }
         );
       }
