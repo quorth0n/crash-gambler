@@ -83,10 +83,23 @@ define(["react"], function (React) {
           D.div(
             { className: "stat" },
             D.span(
-              { className: "number" },
+              {
+                className: "number",
+                style: {
+                  color:
+                    balance - (total_invested + total_divested) < 0
+                      ? "red"
+                      : "green",
+                },
+              },
               balance - (total_invested + total_divested) || "0.00"
             ),
-            D.span({ className: "sub" }, "Profit")
+            D.span(
+              {
+                className: "sub",
+              },
+              "Profit"
+            )
           )
         ),
         D.div(
