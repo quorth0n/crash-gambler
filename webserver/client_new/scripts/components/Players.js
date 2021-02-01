@@ -121,7 +121,7 @@ define([
                 null,
                 D.a(
                   { href: "/user/" + user.username, target: "_blank" },
-                  `${user.bet > 1e6 ? "\ud83d\udc33 " : ""}${user.username}`
+                  `${user.bet >= 1e6 ? "\ud83d\udc33 " : ""}${user.username}`
                 )
               ),
               D.td(null, "-"),
@@ -154,7 +154,7 @@ define([
                 null,
                 D.a(
                   { href: "/user/" + user.username, target: "_blank" },
-                  `${user.bet > 1e6 ? "\ud83d\udc33 " : ""}${user.username}`
+                  `${user.bet >= 1e6 ? "\ud83d\udc33 " : ""}${user.username}`
                 )
               ),
               D.td(null, user.stopped_at / 100 + "x"),
@@ -197,7 +197,7 @@ define([
               null,
               D.a(
                 { href: "/user/" + entry.username, target: "_blank" },
-                `${bet > 1e6 ? "\ud83d\udc33 " : ""}${entry.username}`
+                `${bet >= 1e6 ? "\ud83d\udc33 " : ""}${entry.username}`
               )
             ),
             D.td(null, "-"),
@@ -235,7 +235,7 @@ define([
                   href: "/user/" + entry.username,
                   target: "_blank",
                 },
-                `${bet > 1e6 ? "\ud83d\udc33 " : ""}${entry.username}`
+                `${bet >= 1e6 ? "\ud83d\udc33 " : ""}${entry.username}`
               )
             ),
             D.td(null, stopped / 100, "x"),
