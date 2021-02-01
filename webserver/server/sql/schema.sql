@@ -20,7 +20,6 @@ CREATE TABLE users (
     games_played bigint DEFAULT 0 NOT NULL,
     userclass UserClassEnum DEFAULT 'user' NOT NULL,
     CONSTRAINT users_balance_satoshis_check CHECK ((balance_satoshis >= 0)),
-    CONSTRAINT users_investment_satoshis_check CHECK ((investment_satoshis >= 0))
 );
 
 ALTER TABLE ONLY users
