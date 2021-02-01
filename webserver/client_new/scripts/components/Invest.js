@@ -68,54 +68,29 @@ define(["react"], function (React) {
 
       return D.div(
         { className: "investment-container" },
-        D.div(
-          { className: "stats-grid" },
-          D.div(
-            { className: "stat" },
-            D.span({ className: "number" }, total_invested || "0.00"),
-            D.span({ className: "sub" }, "Total invested")
+        D.table(
+          { className: "stats-table" },
+          D.tr(
+            null,
+            D.td(null, "Total invested"),
+            D.td(null, total_invested || "0.00")
           ),
-          D.div(
-            { className: "stat" },
-            D.span({ className: "number" }, total_divested || "0.00"),
-            D.span({ className: "sub" }, "Total divested")
+          D.tr(
+            null,
+            D.td(null, "Total divested"),
+            D.td(null, total_divested || "0.00")
           ),
-          D.div(
-            { className: "stat" },
-            D.span(
-              {
-                className: "number",
-                style: {
-                  color:
-                    balance - (total_invested + total_divested) < 0
-                      ? "red"
-                      : "green",
-                },
+          D.tr(
+            {
+              style: {
+                color:
+                  balance - (total_invested + total_divested) < 0
+                    ? "red"
+                    : "green",
               },
-              balance - (total_invested + total_divested) || "0.00"
-            ),
-            D.span(
-              {
-                className: "sub",
-              },
-              "Profit"
-            )
-          )
-        ),
-        D.div(
-          { className: "stats-grid" },
-          D.div(
-            { className: "stat" },
-            D.span({ className: "number" }, balance || "0.00"),
-            D.span({ className: "sub" }, "Active investment")
-          ),
-          D.div(
-            { className: "stat" },
-            D.span(
-              { className: "number" },
-              `${((balance / total_investments) * 100 || 0).toFixed(2)}%`
-            ),
-            D.span({ className: "sub" }, "Stake")
+            },
+            D.td(null, "Total profit"),
+            D.td(null, balance - (total_invested + total_divested))
           )
         ),
         D.ul(
@@ -129,10 +104,6 @@ define(["react"], function (React) {
           D.li(
             null,
             "A dilution fee of 1% will be applied to new investments, this dilution fee will be shared over to everyone with an active investment."
-          ),
-          D.li(
-            null,
-            "A commission of 0.39% of the wagered amount is charged on returns and loses for each game."
           )
         ),
         D.form(
@@ -187,6 +158,27 @@ define(["react"], function (React) {
             type: "submit",
             value: "Submit",
           })
+        ),
+        D.table(
+          {
+            className: "stats-table",
+            style: {
+              marginTop: "2rem;",
+            },
+          },
+          D.tr(
+            null,
+            D.td(null, "Active investment"),
+            D.td(null, balance || "0.00")
+          ),
+          D.tr(
+            null,
+            D.td(null, "Current stake"),
+            D.td(
+              null,
+              `${((balance / total_investments) * 100 || 0).toFixed(2)}%`
+            )
+          )
         )
       );
     },

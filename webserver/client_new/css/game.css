@@ -351,6 +351,19 @@ body {
   cursor: pointer;
 }
 
+.investment-container .stats-table {
+  width: 100%;
+  line-height: 1.75;
+}
+
+.stats-table td:first-child {
+  opacity: 0.75;
+}
+
+.stats-table td:last-child {
+  text-align: right;
+}
+
 .investment-container .stats-grid {
   display: flex;
   justify-content: space-around;
@@ -395,6 +408,16 @@ body {
   margin-top: 0.75rem;
   font-size: 0.75rem;
   padding: 0.5rem;
+  background: #4caf50;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.investment-form *[type="submit"]:active {
+  opacity: 75%;
 }
 
 .investment-form .error {
