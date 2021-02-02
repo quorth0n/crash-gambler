@@ -73,12 +73,12 @@ define(["react"], function (React) {
           D.tr(
             null,
             D.td(null, "Total invested"),
-            D.td(null, total_invested || "0.00")
+            D.td(null, (total_invested || 0).toLocaleString())
           ),
           D.tr(
             null,
             D.td(null, "Total divested"),
-            D.td(null, total_divested || "0.00")
+            D.td(null, (total_divested || 0).toLocaleString())
           ),
           D.tr(
             {
@@ -90,7 +90,12 @@ define(["react"], function (React) {
               },
             },
             D.td(null, "Total profit"),
-            D.td(null, balance - (total_invested + total_divested))
+            D.td(
+              null,
+              (
+                balance - (total_invested + total_divested) || 0
+              ).toLocaleString()
+            )
           )
         ),
         D.ul(
@@ -169,7 +174,7 @@ define(["react"], function (React) {
           D.tr(
             null,
             D.td(null, "Active investment"),
-            D.td(null, balance || "0.00")
+            D.td(null, (balance || 0).toLocaleString())
           ),
           D.tr(
             null,

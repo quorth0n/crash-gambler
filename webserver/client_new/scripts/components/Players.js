@@ -124,7 +124,7 @@ define([
                   user.bet >= 1e6 &&
                     D.img({
                       src:
-                        "https://media.discordapp.net/attachments/781667929451266058/805922055488798740/spouting-whale-emoji-by-twitter.png?width=16&height=16",
+                        "https://media.discordapp.net/attachments/781667929451266058/805927772844851200/spouting-whale-emoji-by-twitter_2.png?width=16&height=16",
                     }),
                   user.username
                 )
@@ -162,7 +162,7 @@ define([
                   user.bet >= 1e6 &&
                     D.img({
                       src:
-                        "https://media.discordapp.net/attachments/781667929451266058/805922055488798740/spouting-whale-emoji-by-twitter.png?width=16&height=16",
+                        "https://media.discordapp.net/attachments/781667929451266058/805927772844851200/spouting-whale-emoji-by-twitter_2.png?width=16&height=16",
                     }),
                   user.username
                 )
@@ -210,7 +210,7 @@ define([
                 bet >= 1e6 &&
                   D.img({
                     src:
-                      "https://media.discordapp.net/attachments/781667929451266058/805922055488798740/spouting-whale-emoji-by-twitter.png?width=16&height=16",
+                      "https://media.discordapp.net/attachments/781667929451266058/805927772844851200/spouting-whale-emoji-by-twitter_2.png?width=16&height=16",
                   }),
                 entry.username
               )
@@ -253,7 +253,7 @@ define([
                 bet >= 1e6 &&
                   D.img({
                     src:
-                      "https://media.discordapp.net/attachments/781667929451266058/805922055488798740/spouting-whale-emoji-by-twitter.png?width=16&height=16",
+                      "https://media.discordapp.net/attachments/781667929451266058/805927772844851200/spouting-whale-emoji-by-twitter_2.png?width=16&height=16",
                   }),
                 entry.username
               )
